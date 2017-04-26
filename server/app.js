@@ -47,23 +47,27 @@ app.get( '/getKoalas', function( req, res ){
       console.log('connected!');
       var resultSet = connection.query("SELECT * from koala");
       resultSet.on('row', function (row) {
+        console.log('are you running?', row);
         allKoalas.push(row);
       }); // end row
+
       resultSet.on('end', function () {
+        console.log('allKoalas ->', allKoalas);
+        res.send( allKoalas );
         done();
       });
     } //end else
   });
   //send info back to client
-  res.send( allKoalas );
+
 });
 
 // add koala
 app.post( '/addKoala', function( req, res ){
   console.log( 'addKoala route hit' );
   //assemble object to send
-  var objectToSend={
-    response: 'from addKoala route'
+  var objectToSend = {
+    response: ('from addKoala route')
   }; //end objectToSend
   //send info back to client
   res.send( objectToSend );

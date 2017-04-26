@@ -29,8 +29,12 @@ var getKoalas = function(){
   $.ajax({
     url: '/getKoalas',
     type: 'GET',
-    success: function( data ){
-      console.log( 'got some koalas: ', data );
+    success: function( response ){
+      console.log( 'got some koalas: ', response );
+      $('#viewKoalas').empty();
+        for (var i = 0; i < response.length; i++) {
+          $('#viewKoalas').append('<p>' + response[i].name + ' ' + response[i].sex + ' ' + response[i].age + ' ' + response[i].transfer + ' ' + response[i].notes + '</p>');
+        }
     } // end success
   }); //end ajax
   // display on DOM with buttons that allow edit of each
