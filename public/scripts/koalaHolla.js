@@ -31,6 +31,7 @@ var getKoalas = function(){
     type: 'GET',
     success: function( response ){
       console.log( 'got some koalas: ', response );
+      // When we receive the info from the server(the response) we are then appending each row of info to the DOM with the response[i].name, response[i].age, etc.
       $('#viewKoalas').empty();
         for (var i = 0; i < response.length; i++) {
           $('#viewKoalas').append('<p>' + response[i].name + ' ' + response[i].sex + ' ' + response[i].age + ' ' + response[i].transfer + ' ' + response[i].notes + '</p>');

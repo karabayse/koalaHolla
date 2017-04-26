@@ -45,12 +45,13 @@ app.get( '/getKoalas', function( req, res ){
     }
     else{
       console.log('connected!');
+      // Telling the server to get a row and when it finds one it will push into our empty array.
       var resultSet = connection.query("SELECT * from koala");
       resultSet.on('row', function (row) {
         console.log('are you running?', row);
         allKoalas.push(row);
       }); // end row
-
+// on 'end', or when the process of finding rows is done, we then call the new array.
       resultSet.on('end', function () {
         console.log('allKoalas ->', allKoalas);
         res.send( allKoalas );
