@@ -2,11 +2,20 @@ var express = require( 'express' );
 var app = express();
 var path = require( 'path' );
 var bodyParser= require( 'body-parser' );
-var urlencodedParser = bodyParser.urlencoded( {extended: false } );
 var port = process.env.PORT || 8080;
+var pg = require('pg');
+// setup config for the pool
+var config = {
+  database: 'HollaKoala',
+  host: 'localhost',
+  port: 5432,
+  max: 5
+};
+// create new pool using conifg
+var pool = new pg.Pool(config);
 // static folder
 app.use( express.static( 'public' ) );
-
+app.use( bodyParser.urlencoded( {extended: true }));
 // spin up server
 app.listen( port, function(){
   console.log( 'server up on', port );
@@ -15,22 +24,42 @@ app.listen( port, function(){
 // base url
 app.get( '/', function( req, res ){
   console.log( 'base url hit' );
-  res.sendFile( 'index.html' );
+  res.sendFile( path.resolve('public/index.html' ));
 });
 
 // get koalas
 app.get( '/getKoalas', function( req, res ){
   console.log( 'getKoalas route hit' );
   //assemble object to send
-  var objectToSend={
-    response: 'from getKoalas route'
-  }; //end objectToSend
+  // var objectToSend = {
+  //   response: 'from getKoalas route'
+  // }; //end objectToSend
+  var allKoalas = [];
+  // connect to db
+  pool.connect( function(err, connection, done){
+    //check for error
+    if(err){
+      console.log(err);
+      //respond
+      res.send(400);
+    }
+    else{
+      console.log('connected!');
+      var resultSet = connection.query("SELECT * from koala");
+      resultSet.on('row', function (row) {
+        allKoalas.push(row);
+      }); // end row
+      resultSet.on('end', function () {
+        done();
+      });
+    } //end else
+  });
   //send info back to client
-  res.send( objectToSend );
+  res.send( allKoalas );
 });
 
 // add koala
-app.post( '/addKoala', urlencodedParser, function( req, res ){
+app.post( '/addKoala', function( req, res ){
   console.log( 'addKoala route hit' );
   //assemble object to send
   var objectToSend={
@@ -41,7 +70,7 @@ app.post( '/addKoala', urlencodedParser, function( req, res ){
 });
 
 // add koala
-app.post( '/editKoala', urlencodedParser, function( req, res ){
+app.post( '/editKoala', function( req, res ){
   console.log( 'editKoala route hit' );
   //assemble object to send
   var objectToSend={

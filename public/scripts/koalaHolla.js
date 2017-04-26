@@ -34,17 +34,17 @@ var getKoalas = function(){
     } // end success
   }); //end ajax
   // display on DOM with buttons that allow edit of each
-} // end getKoalas
+}; // end getKoalas
 
 var saveKoala = function( newKoala ){
   console.log( 'in saveKoala', newKoala );
   // ajax call to server to get koalas
   $.ajax({
     url: '/addKoala',
-    type: 'post',
+    type: 'POST',
     data: newKoala,
     success: function( data ){
       console.log( 'got some koalas: ', data );
     } // end success
   }); //end ajax
-}
+};
