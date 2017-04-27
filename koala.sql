@@ -1,0 +1,10 @@
+-- CREATE TABLE koala (
+-- id SERIAL PRIMARY KEY NOT NULL,
+-- name VARCHAR (12) UNIQUE,
+-- sex VARCHAR (1),
+-- age INT,
+-- transfer BOOLEAN,
+-- notes VARCHAR (40)
+-- );
+-- INSERT INTO koala (name, sex, age, transfer, notes) VALUES ('Scotty', 'M', 4, true, 'Born in Guatemala');
+-- INSERT INTO koala (name, sex, age, transfer, notes) VALUES ('Jean', 'F', 5, true, 'Allergic to lots of lava'), ('Ororo', 'F', 7, false, 'Loves listenings to Paula (Abdul)'), ('Logan', 'M', 15, false, 'Loves the sauna'), ('Charlie', 'M', 9, true, 'Favorite band is Nirvana'), ('Betsy', 'F', 4, true, 'Has a pet iguana');
