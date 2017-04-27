@@ -55,6 +55,7 @@ app.get( '/getKoalas', function( req, res ){
       resultSet.on('end', function () {
         console.log('allKoalas ->', allKoalas);
         res.send( allKoalas );
+
         done();
       });
     } //end else
@@ -70,8 +71,23 @@ app.post( '/addKoala', function( req, res ){
   var objectToSend = {
     response: ('from addKoala route')
   }; //end objectToSend
+  pool.connect(function(err, connection, done){
+    if(err){
+      console.log(err);
+      //respond
+      res.send(400);
+    } else{
+      console.log('connected');
+    }
+
+      connection.query("INSERT into koala (name, age, sex, transfer, notes) values ($1, $2, $3, $4, $5)", [req.body.name, req.body.age, req.body.sex, req.body.transfer, req.body.notes]);
+      res.send( objectToSend );
+      done();
+
+  });
   //send info back to client
-  res.send( objectToSend );
+  // res.send( objectToSend );
+  //
 });
 
 // add koala

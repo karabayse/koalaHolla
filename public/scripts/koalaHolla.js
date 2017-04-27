@@ -12,11 +12,11 @@ $( document ).ready( function(){
     // NOT WORKING YET :(
     // using a test object
     var objectToSend = {
-      name: 'testName',
-      age: 'testName',
-      sex: 'testName',
-      readyForTransfer: 'testName',
-      notes: 'testName',
+      name: $('#nameIn').val(),
+      age: $('#ageIn').val(),
+      sex: $('#sexIn').val(),
+      readyForTransfer: $('#readyForTransferIn').val(),
+      notes: $('#notesIn').val()
     };
     // call saveKoala with the new obejct
     saveKoala( objectToSend );
@@ -37,6 +37,7 @@ var getKoalas = function(){
           $('#viewKoalas').append('<p>' + response[i].name + ' ' + response[i].sex + ' ' + response[i].age + ' ' + response[i].transfer + ' ' + response[i].notes + '</p>');
         }
     } // end success
+
   }); //end ajax
   // display on DOM with buttons that allow edit of each
 }; // end getKoalas
